@@ -1,0 +1,373 @@
+body { /* Se personaliza el tipo de letra, la altura, el color y el fondo de toda la parte del body*/
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Se define el estilo para los encabezados h1. */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+}
+
+/* Estilo para los encabezados h2 */
+h2 {
+    font-size: 2rem;
+    color: #000;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Estilo para los encabezados h3 */
+h3 {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+/* Estilo para párrafos, tal omo el color, tamaño y espacios. */
+p {
+    color: #000;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Ayuda a que las imagenes se adapten al tamaño del dispositivo.  */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
+    display: block;
+}
+
+/* Estilo para todos los links de la pagina */
+a {
+    color: #FFCD00;
+    text-decoration: none;
+}
+
+/* Es para los botones cuando pasas el mouse por arriba cambia de color*/
+a:hover {
+    text-decoration: underline;
+}
+
+/* Es el encabezado principal, el fondo, color, alineación, etc.*/
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: #FFCD00;
+    margin-bottom: 20px;
+}
+
+header p {
+    color: white;
+}
+
+/* Es para poner el tamaño y borde del logo de CAT Madisa.*/
+header img {
+    max-width: 300px;
+    border: 3px solid #FFCD00;
+    display: block;
+    margin: 20px auto;
+}
+
+header ul {
+    text-align: left;
+    max-width: 800px;
+    margin: 20px auto;
+    color: white;
+}
+
+/* Recuadro para descripción de Madisa.*/
+.descripcion-box {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid #FFCD00;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.descripcion-box p {
+    color: white;
+    margin: 5px 0;
+}
+
+.descripcion-box ul {
+    color: white;
+}
+
+/* Recuadros para mision, vision y valores.*/
+.info-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid #FFCD00;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.info-box p {
+    color: white;
+    margin: 10px 0;
+}
+
+/* Contenedor para video de YouTube, es el que nos ayuda a ponerle el tamaño deseado.*/
+.video-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+
+/* Es para que el video para que sea responsivo.*/
+.video-container iframe {
+    width: 100%;
+    height: 450px;
+    border-radius: 8px;
+    border: 3px solid #FFCD00;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Contenedor de la seccion actividades destacadas */
+#proyectos {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+#proyectos ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Es el estilo que le di a cada actividad, su fondo, margen, borde, etc.*/
+#proyectos li {
+    background: #efeded;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #FFCD00;
+    color: #000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Es para que el titulo y el texto ocupen todo el ancho */
+#proyectos h3,
+#proyectos p {
+    width: 100%;
+}
+
+/* Es en donde se configuran los tamaños de las imagenes en las actividades destacadaas. */
+#proyectos img {
+    width: 50%;
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Es paraconfigurar el botón que tiene cada Actividad en la página web. */
+#proyectos a {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 250px;
+    margin: 0;
+    padding: 15px 30px;
+    background-color: #FFCD00;
+    color: #000;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.3s;
+    align-self: center;
+}
+
+/* Es básicamente la animación hover que se le da a los botónes que estan en la parte de actividades destacadas.*/
+#proyectos a:hover {
+    background-color: #2c3e50;
+    color: #FFCD00;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-decoration: none;
+}
+
+/* Es el contenedor para la parte del formulario.*/
+#contacto {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+/* Se pone el texto que pide la informacion en negritas*/
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+/* Aqui se especifica el estilo que tendrán los inputs*/
+input[type="text"],
+input[type="email"],
+textarea {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+/* Se da un ntamaño minimo a la textarea*/
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Estado normal del botón */
+button {
+    background-color: #7068f4;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+/* Estado hover para darle el efecto */
+button:hover {
+    background-color: navy;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Es el estilo que le damos al pie de pagina, tanto el color del fondo, la alineación, margen, etc. */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+/* Es el color que se le da a los links de las redes de la empresa.*/
+footer a {
+    color: #FFCD00;
+    margin: 0 8px;
+}
+
+/* Ss le da un efecto hover para que cambie de color cuando pasemos el mouse ariba del ellos*/
+footer a:hover {
+    color: white;
+}
+
+/* Ajustes para tablets */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    #proyectos, #contacto {
+        margin: 20px;
+        padding: 15px;
+    }
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    header {
+        padding: 20px 10px;
+    }
+    
+    header img {
+        max-width: 150px;
+    }
+    
+    #proyectos {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+    
+    #proyectos li {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #proyectos h3,
+    #proyectos p {
+        width: 100%;
+        text-align: left;
+    }
+    
+    #proyectos p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+   #proyectos img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+   #proyectos a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    #contacto {
+        padding: 20px;
+        margin: 20px 10px;
+    }
+    
+    button {
+        padding: 10px 20px;
+    }
+    
+    .video-container {
+        padding: 0 10px;
+    }
+    
+    .video-container iframe {
+        height: 250px;
+    }
+}

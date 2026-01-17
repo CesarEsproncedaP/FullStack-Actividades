@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Este meta sirrve para que cualquier dispositivo pueda ver la pagina sin problemas -->
+    <title>Madisa CAT - Pagina Empresarial</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Referencia para poder usar la clase styles.css -->
+</head>
+<body>
+    <header>
+        <h1>Madisa CAT</h1> <!-- Uso de encabezado(h1) -->
+        <img src="img/logoMadisCAT.jpg" alt="Logo Madisa CAT"> <!-- Agregación de la imagen de la empresa -->
+        <div class="descripcion-box">
+            <p><b>Descripción de Madisa CAT:</b></p> <!-- Uso de "p" para definir un parrafo y "b" para ponerlo en negritas-->
+            <ul> <!-- "ul" para crear una lista que no este ordenada -->
+                <li><b>Cobertura:</b> Sucursales en noreste, centro, sur y sureste de México.</li>
+                <li><b>Industrias atendidas:</b> Construcción pesada, minería, canteras, manufactura, desperdicios, acerera, petróleo, marino, transporte, agrícola y servicios comerciales.</li>
+                <li><b>Soluciones ofrecidas:</b> Maquinaria nueva y usada, renta a corto/largo plazo, financiamiento, mantenimiento/reparación, refacciones, soporte técnico, monitoreo de condiciones y servicios de valor agregado.</li>
+            </ul>
+        </div>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/PZVLSLevCZo" allowfullscreen></iframe>
+        </div>
+        <div class="info-box">
+            <p><u><b><i>Misión:</i></b></u> Tenemos la misión de apoyar a nuestros clientes en sus negocios mediante soluciones integrales de maquinaria, equipos y servicios que mejoren sus procesos productivos, mientras creamos valor para nuestros accionistas, proveedores y empleados.</p>
+        </div>
+        <div class="info-box">
+            <p><u><b><i>Visión:</i></b></u> MADISA es el proveedor estratégico líder, que es reconocido por el valor generado a nuestros clientes de las diversas industrias, gracias a sus las soluciones integrales de maquinaria y servicios que ayudan al progreso del país.</p>
+        </div>
+        <div class="info-box">
+            <p><u><b><i>Valores:</i></b></u></p> <!-- uso de "u" para subrayar el texto, "b" para bold y la "i" para ponerla cursiva-->
+            <ul>
+                <li>Poner al cliente en primer lugar y tener siempre una actitud de <b>SERVICIO</b>.</li>
+                <li>Representar a la compañía y actuar siempre con absoluta <b>INTEGRIDAD</b>.</li>
+                <li>Valorar, <b>RECONOCER</b> y recompensar a nuestros empleados por el logro de resultados.</li>
+                <li>Mostrar energía, creatividad, capacidad de liderazgo, <b>TRABAJAR EN EQUIPO</b> para agregar valor en todo lo que hagamos.</li>
+                <li>Trascender a través de la <b>INNOVACIÓN</b> constante de nuevas formas de trabajo para cambiar lo que hacemos, mejorar eficiencias, interacciones y operaciones del cliente.</li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Parte de selección de Proyectos -->
+    <section id="proyectos">
+        <h2>Actividades destacadas de Madisa CAT</h2> 
+        <ul> <!-- Lista usando "ul" para que no sea ordenada  -->
+            <li>
+                <h3>Venta de Maquinaria</h3>
+                <p>Ofrecemos venta de maquinaria, refacciones y accesorios nuevos para todo tipo de industria o proyecto. Con más de 75 años de experiencia, disponemos de más de 1600 modelos reconocidos por su calidad, confiabilidad y durabilidad, con el respaldo de Grupo MADISA. 
+                    Incluimos opciones de financiamiento y renta con opción a compra.</p>
+                <img src="img/VentaMaquinaria.jpg" alt="Maquinaria Caterpillar"> <!-- Imagen de una excavadora CATERPILLAR en venta -->
+                <a href="https://www.madisa.com/soluciones/maquinaria-nueva/">Da click para ver los modelos y cotizar.</a>
+            </li>
+            <li>
+                <h3>Renta de Maquinaria</h3>
+                <p>Somos tu solución en renta de maquinaria con esquemas de renta pura o con opción a compra, desde un día hasta proyectos de larga duración. Contamos con flota moderna, mantenimiento incluido, monitoreo satelital y cobertura nacional. Ofrecemos planes ajustados a tu 
+                    presupuesto y necesidades.</p>
+                <img src="img/RentaMaquinaria.jpg" alt="Maquinaria en renta"> <!-- Imagen de Renta -->
+                <a href="https://www.madisa.com/renta-de-maquinaria/">Da click para ver nuestras opciones de renta.</a>
+            </li>
+            <li>
+                <h3>Venta de Maquinaria Usada</h3>
+                <p>Encuentra maquinaria usada certificada con el respaldo MADISA, una alternativa eficiente a menor costo. Nuestro inventario incluye equipos inspeccionados y restaurados con refacciones originales, listos para trabajar. Ofrecemos financiamiento, renta con opción a compra y planes de Trade In.</p>
+                <img src="img/VentaMaquinariaUsada.jpg" alt="Maquinaria usada en venta"> <!-- iMAGEN DE VENTA MAQUINARIA USADA -->
+                <a href="https://www.madisa.com/soluciones/venta-de-maquinaria-usada/">Da click para cotizar y ver nuestros equipos disponibles.</a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+        <h2>Contactanos:</h2>
+        <form action="" method="post"> <!-- Creación del formulario con los campos solicitados -->
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br>
+            
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" required></textarea><br>
+            
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <p>Enlaces a nuestras redes sociales:</p>    <!-- REDES SOCIALES DE MADISA -->
+        <a href="https://www.facebook.com/MadisaCAT/">Facebook</a> |
+        <a href="https://www.instagram.com/madisacat/?hl=en">Instagram</a> |
+        <a href="https://www.youtube.com/@GrupoMADISACAT">Youtube</a> |
+        <a href="https://www.tiktok.com/@madisacat">TikTok</a> |
+        <a href="https://www.linkedin.com/company/madisacat/?originalSubdomain=mx">LinkedIn</a>
+        <p>Copyright © Todos los derechos reservados Grupo MADISA 2019.</p> <!-- COPYRIGHT-->
+    </footer>
+
+    <script> // SE HIZO UN SCRIPT PARA QUE EL FORMULARIO PUDIERA ENVIARSE YA QUE DE LO CONTRARIO MARCABA ERROR Y SE CERRABA LA PÁGINA
+    // EL BOTÓN DE ENVIAR SI SIRVE PERO NO LLEGA A NINGUN LADO YA QUE TOMARÍA VARIO TIEMPO INVESTIGARLO Y HACERLO FUNCIONAR, POR LO QUE NO CONVIENE PARA 
+    // ESTA ACTIVIDAD 1, QUIZAS EN EL PROYECTO FINAL PUEDA LLEGAR A CONVENIR.
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            alert('¡El mensaje se ha enviado, le contestaremos lo más rápido posible!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
