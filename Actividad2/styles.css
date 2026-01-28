@@ -1,0 +1,165 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Se hace el estlo que tendra el contenedor creado en el index */
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Se agrega un efecto hover al contenedor */
+.container:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Se le da un estilo especifico al texto del input */
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px 0 0 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #6a89cc;
+    outline: none;
+}
+
+/* Se hace un estilo para los botones del programa */
+button {
+    padding: 12px 20px;
+    background: #6a89cc;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.2s;
+}
+/* Y se le agrega un estilo hover para dichos botones */
+button:hover {
+    background: #4a69bd;
+    transform: scale(1.05);
+}
+
+/* Se crea un estilo unico para la lista, se quitan los puntos, espacio etc. */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Y aqui se le da un estilo a los elementos o tareas que fueron agregadas a la lista */
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s;
+}
+/* Y se leda un efecto hover */
+li:hover {
+    background: #e9ecef;
+}
+
+li span {
+    flex: 1;
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+/* Se le da un estilo a los botones que estan en la lista */
+li button {
+    background: #ff9f43;
+    margin-left: 10px;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* Efecto hover. */
+li button:hover {
+    background: #fa8231;
+}
+
+li button.delete {
+    background: #eb4d4b;
+}
+
+li button.delete:hover {
+    background: #c0392b;
+}
+
+/* Estilo para el botón qeu sirve para borrar todo */
+.btnBorrar {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background: #95a5a6;
+    border-radius: 8px;
+}
+
+/* Efecto hover */
+.btnBorrar:hover {
+    background: #7f8c8d;
+}
+
+/* Media query para que en los celulares se vea bien la página web */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    li button {
+        margin-top: 10px;
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    li button + button {
+        margin-top: 5px;
+    }
+}
