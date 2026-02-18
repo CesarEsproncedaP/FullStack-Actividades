@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Este meta para poder correr la página en cualquier dispositivo -->
+    <title>Gestor de tareas | César Espronceda AL07040765</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Referencia para poder usar la clase styles.css -->
+</head>
+<body>
+    <!-- Contenedor para la autentificación -->
+    <div id="authContainer" class="auth-container">
+        <div class="auth-box">
+            <h1>🔐 Gestor de Tareas</h1>
+            
+            <!-- Formulario para el login -->
+            <div id="loginForm">
+                <h2>Iniciar Sesión</h2>
+                <input type="text" id="loginUsername" placeholder="Usuario">
+                <input type="password" id="loginPassword" placeholder="Contraseña">
+                <button id="btnLogin">Entrar</button> 
+                <p class="auth-link">¿No tienes cuenta? <a href="#" id="linkRegistro">Regístrate</a></p>
+            </div>
+
+            <!-- Formulario para el registro -->
+            <div id="registerForm" style="display: none;">
+                <h2>Crear Cuenta</h2>
+                <input type="text" id="regUsername" placeholder="Usuario">
+                <input type="password" id="regPassword" placeholder="Contraseña">
+                <button id="btnRegister">Registrarse</button>
+                <p class="auth-link">¿Ya tienes cuenta? <a href="#" id="linkLogin">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de la aplicacion -->
+    <div id="appContainer" class="container" style="display: none;">
+        <div class="header">
+            <h1>📝 Gestor de tareas</h1>
+            <div class="user-info">
+                <span id="usuarioNombre"></span> <!-- Para mostrar el nombre del usuario-->
+                <button id="btnCerrarSesion">Cerrar Sesión</button> <!-- Botón para cerrar sesión-->
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="text" id="TareaNueva" placeholder="Escribe la tarea que deseas agregar:">
+            <button id="btnagregar">Agregar</button> <!-- Botón para agregar una tarea nueva -->
+        </div>
+        <ul id="listaTareas"></ul>
+        <button id="Borrar" class="btnBorrar">Limpiar Todas las Tareas</button> <!-- Botón para eliminar todas las tareas del usuario-->
+    </div>
+
+    <script src="app.js"></script> <!-- Referencia para poder usar la clase app.js -->
+</body>
+</html>

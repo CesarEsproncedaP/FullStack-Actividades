@@ -1,0 +1,304 @@
+/* Estilos base del body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Estilos para la autentificación */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.auth-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.auth-box h1 {
+    color: #4a4a4a;
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.auth-box h2 {
+    color: #4a4a4a;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+/* Se le da un estilo especifico a los inputs de login y registro */
+.auth-box input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.auth-box input:focus {
+    border-color: #6a89cc;
+    outline: none;
+}
+
+/* Se creó un estilo para los botones de login y registro */
+.auth-box button {
+    width: 100%;
+    padding: 14px;
+    background: #6a89cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+/* Y se le agrega un estilo hover para los botones */
+.auth-box button:hover {
+    background: #4a69bd;
+    transform: scale(1.02);
+}
+
+.auth-link {
+    margin-top: 20px;
+    font-size: 0.95em;
+    color: #666;
+}
+
+.auth-link a {
+    color: #6a89cc;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Efecto hover en el contenedor */
+.container:hover {
+    transform: translateY(-5px);
+}
+
+/* Header con usuario y logout */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.95em;
+    color: #666;
+}
+
+.user-info span {
+    font-weight: 500;
+}
+
+/* Estilo para el botón de cerrar sesión */
+.btn-logout {
+    padding: 8px 16px;
+    background: #eb4d4b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.3s;
+}
+
+.btn-logout:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+h1 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Se le da un estilo especifico al texto del input */
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px 0 0 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #6a89cc;
+    outline: none;
+}
+
+/* Se hace un estilo para los botones del programa */
+button {
+    padding: 12px 20px;
+    background: #6a89cc;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Y se le agrega un estilo hover para dichos botones */
+button:hover {
+    background: #4a69bd;
+    transform: scale(1.05);
+}
+
+/* Estilo para la lista de tareas  */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Se le da un estilo a los elementos de la lista */
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s;
+}
+
+/* Y se le da un efecto hover */
+li:hover {
+    background: #e9ecef;
+}
+
+li span {
+    flex: 1;
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+/* Se le da un estilo a los botones que estan en la lista */
+li button {
+    background: #ff9f43;
+    margin-left: 10px;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* Efecto hover. */
+li button:hover {
+    background: #fa8231;
+}
+
+li button.delete {
+    background: #eb4d4b;
+}
+
+li button.delete:hover {
+    background: #c0392b;
+}
+
+/* Estilo para el botón qeu sirve para borrar todo */
+.btnBorrar {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background: #95a5a6;
+    border-radius: 8px;
+}
+
+/* Efecto hover */
+.btnBorrar:hover {
+    background: #7f8c8d;
+}
+
+/* Media query para que en los celulares se vea bien la página web */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    li button {
+        margin-top: 10px;
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    li button + button {
+        margin-top: 5px;
+    }
+
+    .auth-box {
+        padding: 25px;
+        margin: 10px;
+    }
+}
