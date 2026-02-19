@@ -27,24 +27,6 @@
     "usuarioId": 1771348107713
   },
   {
-    "id": 1771444881255,
-    "tipo": "ingreso",
-    "categoria": "Pago",
-    "monto": 3000,
-    "descripcion": "Pago que me debia mi mama",
-    "fecha": "2026-02-17",
-    "usuarioId": 1
-  },
-  {
-    "id": 1771444908670,
-    "tipo": "gasto",
-    "categoria": "Servicios",
-    "monto": 1200,
-    "descripcion": "Pago de luz, agua y servicios de streaming",
-    "fecha": "2026-02-18",
-    "usuarioId": 1
-  },
-  {
     "id": 1771458433702,
     "tipo": "gasto",
     "categoria": "Abono",
@@ -52,5 +34,23 @@
     "descripcion": "Abono a mi nuevo celular a 18 MSI",
     "fecha": "2026-02-18",
     "usuarioId": 1771348107713
+  },
+  {
+    "id": 1771461008276,
+    "tipo": "ingreso",
+    "categoria": "Pago",
+    "monto": 3200,
+    "descripcion": "Dinero que me debia mi mamá.",
+    "fecha": "2026-02-17",
+    "usuarioId": 1771460637221
+  },
+  {
+    "id": 1771461039141,
+    "tipo": "gasto",
+    "categoria": "Servicios",
+    "monto": 1400,
+    "descripcion": "Pago de plataformas de streaming, luz, agua, etc.",
+    "fecha": "2026-02-18",
+    "usuarioId": 1771460637221
   }
 ]
