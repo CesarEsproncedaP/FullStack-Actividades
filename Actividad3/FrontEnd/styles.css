@@ -53,6 +53,7 @@ body {
     border-radius: 8px;
     font-size: 1em;
     transition: border-color 0.3s;
+    box-sizing: border-box;
 }
 
 .auth-box input:focus {
@@ -97,7 +98,7 @@ body {
 
 /* Contenedor principal */
 .container {
-    max-width: 600px;
+    max-width: 650px;
     width: 100%;
     background: white;
     padding: 30px;
@@ -116,7 +117,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .user-info {
@@ -151,51 +152,92 @@ body {
 h1 {
     text-align: center;
     color: #4a4a4a;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     font-size: 2em;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-.input-group {
-    display: flex;
+/* Resumen financiero */
+.resumen {
+    background: #e8f5e9;
+    padding: 15px 20px;
+    border-radius: 10px;
     margin-bottom: 20px;
 }
 
-/* Se le da un estilo especifico al texto del input */
-input[type="text"] {
+.resumen h3 {
+    margin: 0 0 10px;
+    color: #2e7d32;
+}
+
+.resumen p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+/* Se le da un estilo especifico al input-group del formulario de agregar */
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.input-group select,
+.input-group input {
     flex: 1;
+    min-width: 80px;
     padding: 12px;
     border: 2px solid #ddd;
-    border-radius: 8px 0 0 8px;
-    font-size: 1em;
+    border-radius: 8px;
+    font-size: 0.95em;
     transition: border-color 0.3s;
 }
 
-input[type="text"]:focus {
+.input-group select:focus,
+.input-group input:focus {
     border-color: #6a89cc;
     outline: none;
 }
 
-/* Se hace un estilo para los botones del programa */
-button {
-    padding: 12px 20px;
+/* Estilo para el input de descripción */
+.input-descripcion {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95em;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-descripcion:focus {
+    border-color: #6a89cc;
+    outline: none;
+}
+
+/* Se hace un estilo para el botón de agregar */
+#btnagregar {
+    width: 100%;
+    padding: 12px;
     background: #6a89cc;
     color: white;
     border: none;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1em;
+    margin-bottom: 20px;
     transition: background 0.3s, transform 0.2s;
 }
 
-/* Y se le agrega un estilo hover para dichos botones */
-button:hover {
+#btnagregar:hover {
     background: #4a69bd;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
-/* Estilo para la lista de tareas  */
+/* Estilo para la lista de movimientos */
 ul {
     list-style: none;
     padding: 0;
@@ -213,6 +255,7 @@ li {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: background 0.3s;
+    border-left: 4px solid #6a89cc;
 }
 
 /* Y se le da un efecto hover */
@@ -220,19 +263,31 @@ li:hover {
     background: #e9ecef;
 }
 
+/* Borde izquierdo verde para ingresos y rojo para gastos */
+li.ingreso {
+    border-left-color: #4CAF50;
+}
+
+li.gasto {
+    border-left-color: #eb4d4b;
+}
+
 li span {
     flex: 1;
-    font-size: 1.1em;
+    font-size: 1em;
     margin-right: 10px;
 }
 
-/* Se le da un estilo a los botones que estan en la lista */
+/* Se le da un estilo a los botones que están en la lista */
 li button {
     background: #ff9f43;
-    margin-left: 10px;
+    margin-left: 8px;
     border-radius: 5px;
     padding: 8px 12px;
     font-size: 0.9em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 /* Efecto hover. */
@@ -248,13 +303,19 @@ li button.delete:hover {
     background: #c0392b;
 }
 
-/* Estilo para el botón qeu sirve para borrar todo */
+/* Estilo para el botón que sirve para borrar todo */
 .btnBorrar {
     display: block;
     width: 100%;
     margin-top: 20px;
+    padding: 12px;
     background: #95a5a6;
+    color: white;
+    border: none;
     border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s;
 }
 
 /* Efecto hover */
@@ -267,32 +328,36 @@ li button.delete:hover {
     .container {
         padding: 20px;
     }
-    
+
     h1 {
         font-size: 1.5em;
     }
-    
+
     .header {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .user-info {
         flex-direction: column;
         gap: 10px;
     }
-    
+
+    .input-group {
+        flex-direction: column;
+    }
+
     li {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     li button {
         margin-top: 10px;
         margin-left: 0;
         width: 100%;
     }
-    
+
     li button + button {
         margin-top: 5px;
     }

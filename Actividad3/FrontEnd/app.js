@@ -1,81 +1,86 @@
-//Clase que se pide en las instrucciones, la cual representa cada tarea.
-class Tarea {
-    constructor(nombre) {
-        this.nombre = nombre;
+// Clase que se pide en las instrucciones, la cual representa cada movimiento.
+class Movimiento {
+    constructor(id, tipo, categoria, monto, descripcion, fecha) {
+        this.id = id;
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.monto = monto;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
     }
 }
 
-class GestorDeTareas { // Clase que maneja a la lista de tareas
+class GestorDeGastos { // Clase que maneja la lista de movimientos
     constructor() {
-        this.tareas = [];
+        this.movimientos = [];
         this.API_URL = 'http://localhost:3000';
         this.token = localStorage.getItem('token');
     }
 
-    async cargarTareas() { // Cargar tareas desde la API.
-        try { 
-            const res = await fetch(`${this.API_URL}/tareas`, {
+    async cargarMovimientos() { // Cargar movimientos desde la API.
+        try {
+            const res = await fetch(`${this.API_URL}/movimientos`, {
                 headers: { 'Authorization': `Bearer ${this.token}` }
             });
             if (!res.ok) throw new Error();
             const data = await res.json();
-            this.tareas = data.map(t => ({...t})); // Copio las tareas con id para que funcione el refresh.
-            renderizarTareas();
+            this.movimientos = data.map(m => ({...m})); // Copio los movimientos con id para que funcione el refresh.
+            renderizarMovimientos();
         } catch {
             mostrarError('Error al cargar');
         }
     }
 
-    async agregarTarea(nombre) { // Agregar tarea a la API
+    async agregarMovimiento(tipo, categoria, monto, descripcion, fecha) { // Agregar movimiento a la API.
         try {
-            const res = await fetch(`${this.API_URL}/tareas`, {
+            const res = await fetch(`${this.API_URL}/movimientos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`
                 },
-                body: JSON.stringify({ nombre })
+                body: JSON.stringify({ tipo, categoria, monto: parseFloat(monto), descripcion, fecha })
             });
             if (!res.ok) throw new Error();
-            const nueva = await res.json();
-            this.tareas.push({...nueva}); // Agrego con id para que persista al refresh.
-            renderizarTareas();
+            const nuevo = await res.json();
+            this.movimientos.push({...nuevo}); // Agrego con id para que persista al refresh.
+            renderizarMovimientos();
         } catch {
             mostrarError('Error al agregar');
         }
     }
 
-    async eliminarTarea(id) { // Eliminar tarea de la API.
+    async eliminarMovimiento(id) { // Eliminar movimiento de la API.
         try {
-            await fetch(`${this.API_URL}/tareas/${id}`, {
+            await fetch(`${this.API_URL}/movimientos/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${this.token}` }
             });
-            this.tareas = this.tareas.filter(t => t.id !== id);
-            renderizarTareas();
+            this.movimientos = this.movimientos.filter(m => m.id !== id);
+            renderizarMovimientos();
         } catch {
             mostrarError('Error al eliminar');
         }
     }
 
-    async limpiarTodo() { // Limpiar todas las tareas de la API.
+    async limpiarTodo() { // Limpiar todos los movimientos de la API.
         try {
-            const promesas = this.tareas.map(t => 
-                fetch(`${this.API_URL}/tareas/${t.id}`, {
+            const promesas = this.movimientos.map(m =>
+                fetch(`${this.API_URL}/movimientos/${m.id}`, {
                     method: 'DELETE',
                     headers: { 'Authorization': `Bearer ${this.token}` }
                 })
             );
             await Promise.all(promesas);
-            this.tareas = [];
-            renderizarTareas();
+            this.movimientos = [];
+            renderizarMovimientos();
         } catch {
             mostrarError('Error al limpiar');
         }
     }
 }
 
-const gestor = new GestorDeTareas();
+const gestor = new GestorDeGastos();
 
 // Funciones de autentificación.
 async function registrar() {
@@ -114,9 +119,9 @@ async function login() { // Función para iniciar sesión
         gestor.token = data.token;
         localStorage.setItem('token', data.token);
         document.getElementById('usuarioNombre').textContent = data.usuario.username;
-        
+
         mostrarApp();
-        gestor.cargarTareas();
+        gestor.cargarMovimientos();
     } catch (e) {
         mostrarError(e.message);
     }
@@ -148,24 +153,47 @@ function mostrarApp() {
     document.getElementById('appContainer').style.display = 'block';
 }
 
-function renderizarTareas() { // Funcion que sirve para que las tareas se puedan ver.
-    const ul = document.getElementById('listaTareas');
+function calcularResumen() { // Función que calcula y muestra el resumen financiero.
+    let ingresos = 0;
+    let gastos = 0;
+    gestor.movimientos.forEach(m => {
+        if (m.tipo === 'ingreso') ingresos += m.monto;
+        else gastos += m.monto;
+    });
+    const saldo = ingresos - gastos;
+    document.getElementById('totalIngresos').textContent = ingresos.toFixed(2);
+    document.getElementById('totalGastos').textContent = gastos.toFixed(2);
+    const saldoEl = document.getElementById('saldo');
+    saldoEl.textContent = saldo.toFixed(2);
+    saldoEl.style.color = saldo >= 0 ? '#4CAF50' : '#eb4d4b';
+}
+
+function renderizarMovimientos() { // Función que sirve para que los movimientos se puedan ver.
+    const ul = document.getElementById('listaMovimientos');
     ul.innerHTML = '';
-    gestor.tareas.forEach((tarea, index) => {
+    gestor.movimientos.forEach((movimiento, index) => {
         const li = document.createElement('li');
+        li.className = movimiento.tipo;
+        const signo = movimiento.tipo === 'ingreso' ? '+' : '-';
+        const color = movimiento.tipo === 'ingreso' ? '#4CAF50' : '#eb4d4b';
         li.innerHTML = `
-            <span>${tarea.nombre}</span>
+            <span>
+                <strong>${movimiento.categoria}</strong> - ${movimiento.descripcion || 'Sin descripción'}<br>
+                <small>📅 ${movimiento.fecha}</small>
+            </span>
+            <span style="color:${color}; font-weight:bold; margin-right:10px;">${signo}$${parseFloat(movimiento.monto).toFixed(2)}</span>
             <button onclick="editar(${index})">Editar</button>
             <button class="delete" onclick="eliminar(${index})">Eliminar</button>
         `;
         ul.appendChild(li);
     });
+    calcularResumen();
 }
 
-function mostrarMensaje(msg) { alert(msg); } 
+function mostrarMensaje(msg) { alert(msg); }
 function mostrarError(msg) { alert('⚠️ ' + msg); }
 
-// Event Listeners 
+// Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
 
     // Eventos para autenticación
@@ -175,49 +203,69 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('linkLogin').addEventListener('click', (e) => { e.preventDefault(); mostrarLogin(); });
     document.getElementById('btnCerrarSesion').addEventListener('click', logout);
 
-    // Evento que sirve para el botón de agregar tareas.
+    // Fecha de hoy por defecto
+    document.getElementById('fecha').valueAsDate = new Date();
+
+    // Evento que sirve para el botón de agregar movimientos.
     document.getElementById('btnagregar').addEventListener('click', () => {
-        const input = document.getElementById('TareaNueva');
-        const valor = input.value.trim();
-        if (valor === '') return mostrarError('Tarea vacía');
-        gestor.agregarTarea(valor);
-        input.value = '';
+        const tipo = document.getElementById('tipo').value;
+        const categoria = document.getElementById('categoria').value.trim();
+        const monto = document.getElementById('monto').value;
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const fecha = document.getElementById('fecha').value;
+        if (!categoria || !monto || !fecha) return mostrarError('Categoría, monto y fecha son obligatorios');
+        gestor.agregarMovimiento(tipo, categoria, monto, descripcion, fecha);
+        document.getElementById('categoria').value = '';
+        document.getElementById('monto').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('fecha').valueAsDate = new Date();
     });
 
-    // Evento para borrar todas las tareas.
+    // Evento para borrar todos los movimientos.
     document.getElementById('Borrar').addEventListener('click', () => {
         if (confirm('¿Limpiar todo?')) gestor.limpiarTodo();
     });
 
-    // Verifica si hay una sesion iniciada al entrar a la página.
+    // Verifica si hay una sesión iniciada al entrar a la página.
     if (gestor.token) {
         mostrarApp();
-        gestor.cargarTareas();
+        gestor.cargarMovimientos();
     } else {
         mostrarLogin();
     }
 });
 
-window.eliminar = (index) => { // Funcion que sirve para eliminar solamente la tarea seleccionada.
-    const id = gestor.tareas[index].id;
-    if (confirm('¿Eliminar?')) gestor.eliminarTarea(id);
+window.eliminar = (index) => { // Función que sirve para eliminar solamente el movimiento seleccionado.
+    const id = gestor.movimientos[index].id;
+    if (confirm('¿Eliminar?')) gestor.eliminarMovimiento(id);
 };
 
-window.editar = (index) => { // Función para editar la tarea seleccionada.
-    const tarea = gestor.tareas[index];
-    const nuevo = prompt('Editar:', tarea.nombre);
-    if (nuevo && nuevo.trim() !== '') {
-        fetch(`${gestor.API_URL}/tareas/${tarea.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${gestor.token}`
-            },
-            body: JSON.stringify({ nombre: nuevo.trim() })
-        }).then(res => {
-            if (!res.ok) throw new Error();
-            tarea.nombre = nuevo.trim(); // Actualizo local para que persista al refresh.
-            renderizarTareas();
-        }).catch(() => mostrarError('Error al editar'));
-    }
+window.editar = (index) => { // Función para editar el movimiento seleccionado.
+    const mov = gestor.movimientos[index];
+    const nuevoTipo = prompt('Tipo (ingreso/gasto):', mov.tipo);
+    if (!nuevoTipo) return;
+    const nuevaCategoria = prompt('Categoría:', mov.categoria);
+    if (!nuevaCategoria) return;
+    const nuevoMonto = prompt('Monto:', mov.monto);
+    if (!nuevoMonto) return;
+    const nuevaDescripcion = prompt('Descripción:', mov.descripcion);
+    const nuevaFecha = prompt('Fecha (YYYY-MM-DD):', mov.fecha);
+    if (!nuevaFecha) return;
+
+    fetch(`${gestor.API_URL}/movimientos/${mov.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${gestor.token}`
+        },
+        body: JSON.stringify({ tipo: nuevoTipo, categoria: nuevaCategoria, monto: parseFloat(nuevoMonto), descripcion: nuevaDescripcion, fecha: nuevaFecha })
+    }).then(res => {
+        if (!res.ok) throw new Error();
+        mov.tipo = nuevoTipo;
+        mov.categoria = nuevaCategoria;
+        mov.monto = parseFloat(nuevoMonto); // Actualizo local para que persista al refresh.
+        mov.descripcion = nuevaDescripcion;
+        mov.fecha = nuevaFecha;
+        renderizarMovimientos();
+    }).catch(() => mostrarError('Error al editar'));
 };

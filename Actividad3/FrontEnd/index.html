@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Este meta para poder correr la página en cualquier dispositivo -->
-    <title>Gestor de tareas | César Espronceda AL07040765</title>
+    <title>Gestor de Gastos | César Espronceda AL07040765</title>
     <link rel="stylesheet" href="styles.css"> <!-- Referencia para poder usar la clase styles.css -->
 </head>
 <body>
     <!-- Contenedor para la autentificación -->
     <div id="authContainer" class="auth-container">
         <div class="auth-box">
-            <h1>🔐 Gestor de Tareas</h1>
+            <h1>💰 Gestor de Gastos</h1>
             
             <!-- Formulario para el login -->
             <div id="loginForm">
@@ -35,18 +35,36 @@
     <!-- Contenedor de la aplicacion -->
     <div id="appContainer" class="container" style="display: none;">
         <div class="header">
-            <h1>📝 Gestor de tareas</h1>
+            <h1>💸 Gestor de Gastos</h1>
             <div class="user-info">
                 <span id="usuarioNombre"></span> <!-- Para mostrar el nombre del usuario-->
-                <button id="btnCerrarSesion">Cerrar Sesión</button> <!-- Botón para cerrar sesión-->
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button> <!-- Botón para cerrar sesión-->
             </div>
         </div>
-        <div class="input-group">
-            <input type="text" id="TareaNueva" placeholder="Escribe la tarea que deseas agregar:">
-            <button id="btnagregar">Agregar</button> <!-- Botón para agregar una tarea nueva -->
+
+        <!-- Resumen financiero del usuario -->
+        <div class="resumen">
+            <h3>📊 Resumen Financiero</h3>
+            <p><strong>Total Ingresos:</strong> $<span id="totalIngresos">0.00</span></p>
+            <p><strong>Total Gastos:</strong> $<span id="totalGastos">0.00</span></p>
+            <p><strong>Saldo:</strong> $<span id="saldo">0.00</span></p>
         </div>
-        <ul id="listaTareas"></ul>
-        <button id="Borrar" class="btnBorrar">Limpiar Todas las Tareas</button> <!-- Botón para eliminar todas las tareas del usuario-->
+
+        <!-- Formulario para agregar un movimiento nuevo -->
+        <div class="input-group">
+            <select id="tipo">
+                <option value="gasto">Gasto</option>
+                <option value="ingreso">Ingreso</option>
+            </select>
+            <input type="text" id="categoria" placeholder="Categoría">
+            <input type="number" id="monto" placeholder="Monto" step="0.01">
+            <input type="date" id="fecha">
+            <button id="btnagregar">Agregar</button> <!-- Botón para agregar un movimiento nuevo -->
+        </div>
+        <input type="text" id="descripcion" placeholder="Descripción (opcional)" class="input-descripcion">
+
+        <ul id="listaMovimientos"></ul>
+        <button id="Borrar" class="btnBorrar">Limpiar Todos los Movimientos</button> <!-- Botón para eliminar todos los movimientos del usuario-->
     </div>
 
     <script src="app.js"></script> <!-- Referencia para poder usar la clase app.js -->

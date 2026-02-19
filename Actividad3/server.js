@@ -1,8 +1,8 @@
 const express = require('express'); // Se usa express para crear el servidor.
-const bodyParser = require('body-parser'); // Se usa body-praser para que se escriba el JSON.
-const fs = require('fs').promises;// Se usa fs.promises par realizar operaciones asíncronas.
-const path = require('path'); // Se usa path para las rutas de archios.
-const bcrypt = require('bcryptjs'); // Se isa Bcrypt para encriptar las contraseñas.
+const bodyParser = require('body-parser'); // Se usa body-parser para que se escriba el JSON.
+const fs = require('fs').promises; // Se usa fs.promises para realizar operaciones asíncronas.
+const path = require('path'); // Se usa path para las rutas de archivos.
+const bcrypt = require('bcryptjs'); // Se usa Bcrypt para encriptar las contraseñas.
 const jwt = require('jsonwebtoken'); // Se usa JWT para los tokens.
 
 const app = express(); // Se usa express para crear la aplicación.
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Log  ging
+// Logging
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
     next();
@@ -37,18 +37,18 @@ app.get('/', (req, res) => {
 });
 
 // Funciones para manejar archivos con fs.promises.
-async function leerTareas() { // Función para leer tareas de tareas.json.
+async function leerMovimientos() { // Función para leer movimientos de movimientos.json.
     try {
-        const data = await fs.readFile(path.join(__dirname, 'tareas.json'), 'utf-8');
+        const data = await fs.readFile(path.join(__dirname, 'movimientos.json'), 'utf-8');
         return JSON.parse(data);
     } catch {
-        await fs.writeFile(path.join(__dirname, 'tareas.json'), JSON.stringify([]));
+        await fs.writeFile(path.join(__dirname, 'movimientos.json'), JSON.stringify([]));
         return [];
     }
 }
 
-async function escribirTareas(tareas) { // Función para escribir tareas en tareas.json.
-    await fs.writeFile(path.join(__dirname, 'tareas.json'), JSON.stringify(tareas, null, 2));
+async function escribirMovimientos(movimientos) { // Función para escribir movimientos en movimientos.json.
+    await fs.writeFile(path.join(__dirname, 'movimientos.json'), JSON.stringify(movimientos, null, 2));
 }
 
 async function leerUsuarios() { // Función para leer usuarios de usuarios.json.
@@ -110,45 +110,57 @@ app.post('/login', async (req, res) => {
     res.json({ token, usuario: { id: usuario.id, username } });
 });
 
-// Rutas protegidas para tareas.
-app.get('/tareas', verificarToken, async (req, res) => { //Devuelve todas las tareas del usuario.
-    const tareas = await leerTareas();
-    const mías = tareas.filter(t => t.usuarioId === req.usuario.id);
-    res.json(mías);
+// Rutas protegidas para movimientos.
+app.get('/movimientos', verificarToken, async (req, res) => { // Devuelve todos los movimientos del usuario.
+    const movimientos = await leerMovimientos();
+    const míos = movimientos.filter(m => m.usuarioId === req.usuario.id);
+    res.json(míos);
 });
 
-app.post('/tareas', verificarToken, async (req, res) => { // Agrega una nueva tarea.
-    const { nombre } = req.body;
-    if (!nombre) return res.status(400).json({ error: 'Nombre requerido' });
+app.post('/movimientos', verificarToken, async (req, res) => { // Agrega un nuevo movimiento.
+    const { tipo, categoria, monto, descripcion, fecha } = req.body;
+    if (!tipo || !categoria || !monto || !fecha) return res.status(400).json({ error: 'Faltan datos obligatorios' });
 
-    const tareas = await leerTareas();
-    const nueva = { id: Date.now(), nombre: nombre.trim(), usuarioId: req.usuario.id };
-    tareas.push(nueva);
-    await escribirTareas(tareas);
-    res.status(201).json(nueva);
+    const movimientos = await leerMovimientos();
+    const nuevo = {
+        id: Date.now(),
+        tipo,
+        categoria: categoria.trim(),
+        monto: parseFloat(monto),
+        descripcion: descripcion || '',
+        fecha,
+        usuarioId: req.usuario.id
+    };
+    movimientos.push(nuevo);
+    await escribirMovimientos(movimientos);
+    res.status(201).json(nuevo);
 });
 
-app.put('/tareas/:id', verificarToken, async (req, res) => { // Actualiza una tarea.
+app.put('/movimientos/:id', verificarToken, async (req, res) => { // Actualiza un movimiento.
     const { id } = req.params;
-    const { nombre } = req.body;
-    const tareas = await leerTareas();
-    const tarea = tareas.find(t => t.id === parseInt(id) && t.usuarioId === req.usuario.id);
-    if (!tarea) return res.status(404).json({ error: 'Tarea no encontrada' });
+    const { tipo, categoria, monto, descripcion, fecha } = req.body;
+    const movimientos = await leerMovimientos();
+    const movimiento = movimientos.find(m => m.id === parseInt(id) && m.usuarioId === req.usuario.id);
+    if (!movimiento) return res.status(404).json({ error: 'Movimiento no encontrado' });
 
-    tarea.nombre = nombre.trim();
-    await escribirTareas(tareas);
-    res.json(tarea);
+    movimiento.tipo = tipo;
+    movimiento.categoria = categoria.trim();
+    movimiento.monto = parseFloat(monto);
+    movimiento.descripcion = descripcion || '';
+    movimiento.fecha = fecha;
+    await escribirMovimientos(movimientos);
+    res.json(movimiento);
 });
 
-app.delete('/tareas/:id', verificarToken, async (req, res) => { // Elimina una tarea.
+app.delete('/movimientos/:id', verificarToken, async (req, res) => { // Elimina un movimiento.
     const { id } = req.params;
-    let tareas = await leerTareas();
-    const inicial = tareas.length;
-    tareas = tareas.filter(t => !(t.id === parseInt(id) && t.usuarioId === req.usuario.id));
-    if (tareas.length === inicial) return res.status(404).json({ error: 'Tarea no encontrada' });
+    let movimientos = await leerMovimientos();
+    const inicial = movimientos.length;
+    movimientos = movimientos.filter(m => !(m.id === parseInt(id) && m.usuarioId === req.usuario.id));
+    if (movimientos.length === inicial) return res.status(404).json({ error: 'Movimiento no encontrado' });
 
-    await escribirTareas(tareas);
-    res.json({ message: 'Eliminada' });
+    await escribirMovimientos(movimientos);
+    res.json({ message: 'Eliminado' });
 });
 
 // Se inicia el servidor en el puerto 3000.

@@ -1,7 +1,7 @@
 {
-  "name": "api-tareas",
+  "name": "api-gastos",
   "version": "1.0.0",
-  "description": "API RESTful para gestión de tareas con autenticación JWT",
+  "description": "API RESTful para gestión de gastos personales con autenticación JWT",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,7 +10,7 @@
   "keywords": [
     "api",
     "rest",
-    "tareas",
+    "gastos",
     "express",
     "jwt",
     "authentication"

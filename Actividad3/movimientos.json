@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1771444675844,
+    "tipo": "ingreso",
+    "categoria": "Pago",
+    "monto": 15839.9,
+    "descripcion": "Quincena trabajo",
+    "fecha": "2026-02-15",
+    "usuarioId": 1771348107713
+  },
+  {
+    "id": 1771444725326,
+    "tipo": "gasto",
+    "categoria": "Diversión",
+    "monto": 5700,
+    "descripcion": "Nueva bolsa para set de golf",
+    "fecha": "2026-02-16",
+    "usuarioId": 1771348107713
+  },
+  {
+    "id": 1771444762182,
+    "tipo": "gasto",
+    "categoria": "Comida",
+    "monto": 165,
+    "descripcion": "Pasta y limonada en TecMilenio",
+    "fecha": "2026-02-18",
+    "usuarioId": 1771348107713
+  },
+  {
+    "id": 1771444881255,
+    "tipo": "ingreso",
+    "categoria": "Pago",
+    "monto": 3000,
+    "descripcion": "Pago que me debia mi mama",
+    "fecha": "2026-02-17",
+    "usuarioId": 1
+  },
+  {
+    "id": 1771444908670,
+    "tipo": "gasto",
+    "categoria": "Servicios",
+    "monto": 1200,
+    "descripcion": "Pago de luz, agua y servicios de streaming",
+    "fecha": "2026-02-18",
+    "usuarioId": 1
+  },
+  {
+    "id": 1771458433702,
+    "tipo": "gasto",
+    "categoria": "Abono",
+    "monto": 2750,
+    "descripcion": "Abono a mi nuevo celular a 18 MSI",
+    "fecha": "2026-02-18",
+    "usuarioId": 1771348107713
+  }
+]
