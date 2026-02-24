@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Productos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #1a3c6e;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav h1 { color: white; font-size: 1.2rem; }
+    nav button {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    nav button:hover { background: rgba(255,255,255,0.1); }
+
+    .contenido { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+
+    .formulario {
+      background: white;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 32px;
+    }
+    .formulario h2 { color: #1a3c6e; margin-bottom: 16px; }
+    .fila { display: flex; gap: 12px; flex-wrap: wrap; }
+    .fila input {
+      flex: 1;
+      min-width: 150px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .fila input:focus { outline: none; border-color: #4a90e2; }
+    .botones-form { display: flex; gap: 10px; margin-top: 12px; }
+    .btn-agregar {
+      padding: 10px 24px;
+      background: #1a3c6e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-agregar:hover { background: #2d5fa3; }
+    .btn-cancelar {
+      padding: 10px 24px;
+      background: #aaa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      display: none;
+    }
+    .btn-cancelar:hover { background: #888; }
+
+    .tabla-contenedor {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .tabla-header {
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+    }
+    .tabla-header h2 { color: #1a3c6e; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: #f8f9fa;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 13px;
+      color: #666;
+      border-bottom: 1px solid #eee;
+    }
+    td {
+      padding: 12px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8f9fa; }
+
+    .btn-editar {
+      padding: 6px 12px;
+      background: #f0a500;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+    .btn-editar:hover { background: #d4920a; }
+    .btn-eliminar {
+      padding: 6px 12px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-eliminar:hover { background: #c0392b; }
+
+    .sin-productos {
+      text-align: center;
+      padding: 40px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .mensaje {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .ok    { background: #dfd; color: #060; }
+    .error { background: #fde; color: #c00; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h1>📦 Gestión de Productos</h1>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+  </nav>
+
+  <div class="contenido">
+
+    <!-- Formulario agregar / editar -->
+    <div class="formulario">
+      <h2 id="tituloFormulario">Agregar Producto</h2>
+      <div id="mensajeForm" class="mensaje"></div>
+      <div class="fila">
+        <input type="hidden" id="productoId" />
+        <input type="text"   id="nombre"      placeholder="Nombre *" />
+        <input type="text"   id="descripcion" placeholder="Descripción" />
+        <input type="number" id="precio"      placeholder="Precio *" min="0" />
+        <input type="number" id="stock"       placeholder="Stock"    min="0" />
+      </div>
+      <div class="botones-form">
+        <button class="btn-agregar"  onclick="guardarProducto()">Agregar</button>
+        <button class="btn-cancelar" id="btnCancelar" onclick="cancelarEdicion()">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="tabla-contenedor">
+      <div class="tabla-header">
+        <h2>Productos</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaProductos">
+          <tr><td colspan="5" class="sin-productos">Cargando productos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+<script>
+  const token = localStorage.getItem('token');
+
+  // Si no hay token, regresar al login
+  if (!token) window.location.href = '/login.html';
+
+  //  CARGAR PRODUCTOS 
+  async function cargarProductos() {
+    const res  = await fetch('/api/productos', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    const tbody = document.getElementById('tablaProductos');
+
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="sin-productos">No hay productos aún. ¡Agrega el primero!</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(p => `
+      <tr>
+        <td>${p.nombre}</td>
+        <td>${p.descripcion || '-'}</td>
+        <td>$${p.precio}</td>
+        <td>${p.stock}</td>
+        <td>
+          <button class="btn-editar"   onclick="editarProducto('${p._id}', '${p.nombre}', '${p.descripcion || ''}', ${p.precio}, ${p.stock})">Editar</button>
+          <button class="btn-eliminar" onclick="eliminarProducto('${p._id}')">Eliminar</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  //  GUARDAR 
+  async function guardarProducto() {
+    const id          = document.getElementById('productoId').value;
+    const nombre      = document.getElementById('nombre').value.trim();
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const precio      = document.getElementById('precio').value;
+    const stock       = document.getElementById('stock').value;
+
+    if (!nombre || !precio) {
+      mostrarMensaje('El nombre y el precio son obligatorios.', 'error');
+      return;
+    }
+
+    const url    = id ? `/api/productos/${id}` : '/api/productos';
+    const method = id ? 'PUT' : 'POST';
+
+    const res  = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ nombre, descripcion, precio: Number(precio), stock: Number(stock) })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      mostrarMensaje(id ? 'Producto actualizado.' : 'Producto agregado.', 'ok');
+      cancelarEdicion();
+      cargarProductos();
+    } else {
+      mostrarMensaje(data.mensaje, 'error');
+    }
+  }
+
+  //  EDITAR 
+  function editarProducto(id, nombre, descripcion, precio, stock) {
+    document.getElementById('productoId').value   = id;
+    document.getElementById('nombre').value       = nombre;
+    document.getElementById('descripcion').value  = descripcion;
+    document.getElementById('precio').value       = precio;
+    document.getElementById('stock').value        = stock;
+    document.getElementById('tituloFormulario').textContent = 'Editar Producto';
+    document.querySelector('.btn-agregar').textContent      = 'Guardar cambios';
+    document.getElementById('btnCancelar').style.display    = 'inline-block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  //  CANCELAR EDICIÓN 
+  function cancelarEdicion() {
+    document.getElementById('productoId').value   = '';
+    document.getElementById('nombre').value       = '';
+    document.getElementById('descripcion').value  = '';
+    document.getElementById('precio').value       = '';
+    document.getElementById('stock').value        = '';
+    document.getElementById('tituloFormulario').textContent = 'Agregar Producto';
+    document.querySelector('.btn-agregar').textContent      = 'Agregar';
+    document.getElementById('btnCancelar').style.display    = 'none';
+  }
+
+  //  ELIMINAR 
+  async function eliminarProducto(id) {
+    if (!confirm('¿Seguro que quieres eliminar este producto?')) return;
+
+    const res = await fetch(`/api/productos/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+
+    if (res.ok) {
+      mostrarMensaje('Producto eliminado.', 'ok');
+      cargarProductos();
+    }
+  }
+
+  //  CERRAR SESIÓN 
+  function cerrarSesion() {
+    localStorage.removeItem('token');
+    window.location.href = '/login.html';
+  }
+
+  //  MOSTRAR MENSAJE 
+  function mostrarMensaje(texto, tipo) {
+    const el = document.getElementById('mensajeForm');
+    el.textContent = texto;
+    el.className = 'mensaje ' + tipo;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+  }
+
+  // Cargar productos al abrir la página
+  cargarProductos();
+</script>
+
+</body>
+</html>

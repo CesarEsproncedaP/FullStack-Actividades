@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Productos - Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .tarjeta {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 360px;
+    }
+    h2 { text-align: center; color: #333; margin-bottom: 24px; }
+    label { display: block; margin-bottom: 6px; color: #555; font-size: 14px; }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1a3c6e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #2d5fa3; }
+    .mensaje {
+      margin-top: 14px;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+    .error { background: #fde; color: #c00; }
+    .ok    { background: #dfd; color: #060; }
+    .cambiar { text-align: center; margin-top: 16px; font-size: 13px; color: #888; }
+    .cambiar a { color: #1a3c6e; cursor: pointer; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="tarjeta">
+  <h2>📦 Gestión de Productos</h2>
+
+  <!-- Login -->
+  <div id="seccionLogin">
+    <label>Email</label>
+    <input type="email" id="loginEmail" placeholder="tu@email.com" />
+    <label>Contraseña</label>
+    <input type="password" id="loginPassword" placeholder="••••••" />
+    <button onclick="hacerLogin()">Iniciar sesión</button>
+    <div class="cambiar">¿No tienes cuenta? <a onclick="mostrar('registro')">Regístrate</a></div>
+  </div>
+
+  <!-- Registro -->
+  <div id="seccionRegistro" style="display:none">
+    <label>Nombre</label>
+    <input type="text" id="regNombre" placeholder="Tu nombre" />
+    <label>Email</label>
+    <input type="email" id="regEmail" placeholder="tu@email.com" />
+    <label>Contraseña</label>
+    <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres" />
+    <button onclick="hacerRegistro()">Crear cuenta</button>
+    <div class="cambiar">¿Ya tienes cuenta? <a onclick="mostrar('login')">Inicia sesión</a></div>
+  </div>
+
+  <div class="mensaje" id="mensaje"></div>
+</div>
+
+<script>
+  function mostrar(cual) {
+    document.getElementById('seccionLogin').style.display    = cual === 'login'    ? 'block' : 'none';
+    document.getElementById('seccionRegistro').style.display = cual === 'registro' ? 'block' : 'none';
+    document.getElementById('mensaje').style.display = 'none';
+  }
+
+  function mostrarMensaje(texto, tipo) {
+    const el = document.getElementById('mensaje');
+    el.textContent = texto;
+    el.className = 'mensaje ' + tipo;
+    el.style.display = 'block';
+  }
+
+  async function hacerLogin() {
+    const email    = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const res      = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      mostrarMensaje('¡Bienvenido, ' + data.nombre + '!', 'ok');
+      setTimeout(() => window.location.href = '/dashboard.html', 1000);
+    } else {
+      mostrarMensaje(data.mensaje, 'error');
+    }
+  }
+
+  async function hacerRegistro() {
+    const nombre   = document.getElementById('regNombre').value;
+    const email    = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+    const res      = await fetch('/api/auth/registro', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      mostrarMensaje('¡Cuenta creada! Redirigiendo...', 'ok');
+      setTimeout(() => window.location.href = '/dashboard.html', 1000);
+    } else {
+      mostrarMensaje(data.mensaje, 'error');
+    }
+  }
+</script>
+</body>
+</html>
